@@ -1,0 +1,11 @@
+# misc
+.DS_Store
+.venv/
+dados/
+docs/
+__pycache__/
+
+# auxiliares
+crawler.py
+file_to_db.py
+files_to_db.py
