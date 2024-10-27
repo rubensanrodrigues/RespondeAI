@@ -6,7 +6,7 @@ import openai  # type: ignore
 from openai.embeddings_utils import distances_from_embeddings  # type: ignore
 
 from time import sleep
-from datetime import datetime, timedelta, UTC
+from datetime import datetime, timedelta, timezone
 
 
 from app import app, db
@@ -16,12 +16,11 @@ openai.api_key = app.config['OPENAI_KEY']
 
 # cache
 df = None
-exp = datetime.now(UTC)
+exp = datetime.now(timezone.utc)
 
 
 class OpenaiEngine():
     def create_ebbedings():
-        print("Hello")
         i = 0
         is_dbcommit = False
         knowledge_formateds = KnowledgeFormated.query.filter_by(is_created=False).all()  # noqa: E501
@@ -63,11 +62,11 @@ class OpenaiEngine():
         global df, exp
 
         # se cache nao estiver expirado, nao faz nada
-        if exp > datetime.now(UTC):
+        if exp > datetime.now(timezone.utc):
             return None
 
         # configura novo cache para 15 minutos a partir de agora
-        exp = datetime.now(UTC) + timedelta(minutes=(15))
+        exp = datetime.now(timezone.utc) + timedelta(minutes=(15))
 
         df = pd.DataFrame(columns=['token_count', 'text', 'embeddings'])
         knowledge_formateds = KnowledgeFormated.query.filter_by(is_created=True).all()  # noqa: E501

@@ -65,7 +65,7 @@ class UserController():
                 return response_wrapper.get_response(status=404, message="Usuário não encontrado")
 
             user.username = data['username']
-            user.useremail = data['username']
+            user.useremail = data['useremail']
             user.password = data['password']
 
             db.session.add(user)
@@ -83,7 +83,14 @@ class UserController():
         if not user:
             return response_wrapper.get_response(status=404, message="Usuário não encontrado")
 
-        return response_wrapper.get_response(data={'username': user.username, 'email': user.useremail})
+        return response_wrapper.get_response(
+            data={
+                'id': user.id,
+                'username': user.username,
+                'useremail': user.useremail,
+                'password': user.password
+            }
+        )
 
     def delete_user(request, user_id):
         response_wrapper = ResponseWrapper()

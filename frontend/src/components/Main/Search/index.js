@@ -17,6 +17,7 @@ function Search() {
       <input 
         placeholder="Olá! Digite aqui sua dúvida."
         onKeyUp={(event) => keyUp(event)}
+        className="inputSearch"
       />
       <p>{response}</p>
     </section>

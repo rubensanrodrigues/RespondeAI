@@ -1,6 +1,6 @@
 {
-  "short_name": "IA Responde",
-  "name": "Sistema auxiliar - IA Responde",
+  "short_name": "RespondeAI",
+  "name": "Sistema auxiliar - RespondeAI",
   "icons": [],
   "start_url": ".",
   "display": "standalone",

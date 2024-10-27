@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, UTC
+from datetime import datetime, timedelta, timezone
 
 from flask import jsonify
 
@@ -28,8 +28,8 @@ class Helper():
 
     def get_payload(sub):
         return {
-            'exp': datetime.now(UTC) + timedelta(minutes=(2*60)),
-            'iat': datetime.now(UTC),
+            'exp': datetime.now(timezone.utc) + timedelta(minutes=(2*60)),
+            'iat': datetime.now(timezone.utc),
             'sub': f'{sub}'
         }
 

@@ -20,6 +20,13 @@ def answer():
     return OpenaiEngine.answer(data['question'])
 
 
+@app.route('/ebbedings/create')
+def create_ebbedings():
+    OpenaiEngine.create_ebbedings()
+
+    return 'Done Create Ebbedings'
+
+
 # Auth
 @app.route('/login', methods=['POST'])
 def login():

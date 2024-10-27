@@ -1,10 +1,11 @@
 import axios from "axios"
+import RESPONDEAI_API_URL from "./conf";
 
-const answerAPI = axios.create({ baseURL: 'http://localhost:5000' })
+const respndeAIAPI = axios.create({ baseURL: RESPONDEAI_API_URL })
 
 function answer(q, setData) {
 
-  answerAPI.post('/answer', { question: q })
+  respndeAIAPI.post('/answer', { question: q })
     .then(function (response) {
       setData(response.data)
       console.log(response.data);
