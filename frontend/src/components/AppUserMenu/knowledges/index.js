@@ -17,7 +17,7 @@ function KnowledgesList() {
         {knowledges.length} registros encontrados.
       </div>
       <div className="collection-items-new">
-        <Link to="/appuser/knowledges/new" ><button>Adicionar novo Conhecimentos</button></Link>
+        <Link to="/appuser/knowledges/new" ><button>Adicionar novo Conhecimento</button></Link>
       </div>
       <ul className="collection-items">
         {
@@ -50,10 +50,34 @@ function KnowledgeNew() {
 
   function handelSubmit(e) {
     e.preventDefault();
-    saveKnowledge(letsGo, knowledge)
+    
+    // Se estiver ok, salva
+    if (isValid(knowledge)) {
+      saveKnowledge(letsGo, knowledge);
+    }
+    else {
+      const element = document.getElementById('mensagemValidacao');
+      element.classList.add('error-msg');
+    }
   }  
   
   return knowledgeForm(knowledge, handelInput, handelSubmit)
+}
+
+function isValid(knowledge) {
+  var isOK = true;
+    
+  // Valida se esta vazio
+  if(!knowledge.subject) {
+    isOK = false;
+  }
+
+  // Valida se esta vazio
+  if(!knowledge.information) {
+    isOK = false;
+  }
+
+  return isOK;
 }
 
 function KnowledgeEdit() {
@@ -79,7 +103,15 @@ function KnowledgeEdit() {
 
   function handelSubmit(e) {
     e.preventDefault();
-    updateKnowledge(letsGo, knowledge)
+
+    // Se estiver ok, atualiza
+    if (isValid(knowledge)) {
+      updateKnowledge(letsGo, knowledge)
+    }
+    else {
+      const element = document.getElementById('mensagemValidacao');
+      element.classList.add('error-msg');
+    }
   }
 
   return knowledgeForm(knowledge, handelInput, handelSubmit)
@@ -99,7 +131,7 @@ function DeleteButton({data}) {
   }
   
   if (data.id)
-    return (<button className="button" onClick={handleClick}>Excluir permanentemente</button>)
+    return (<button id="btnDelete" className="button" onClick={handleClick}>Excluir permanentemente</button>)
 }
 
 function BackButton() {
@@ -110,16 +142,17 @@ function BackButton() {
     navigate('/appuser/knowledges/');
   }
 
-  return (<button className="button" onClick={letsBack}>Voltar à listagem</button>)
+  return (<button id="btnVoltar" className="button" onClick={letsBack}>Voltar à listagem</button>)
 }
 
 function knowledgeForm(knowledge, handelInput, handelSubmit) {
   return (
     <section>
+      <h3>Formulário para Cadastro de Conhecimento</h3>
       <form onSubmit={handelSubmit} class="form-entity">
         <div>
-          <label>
-            Assunto
+          <label htmlFor="subject">
+            * Assunto
           </label>
           <input
             type="text"
@@ -131,8 +164,8 @@ function knowledgeForm(knowledge, handelInput, handelSubmit) {
         </div>
         <br />
         <div>
-          <label>
-            Conteúdo
+          <label htmlFor="information">
+          * Conteúdo
           </label>
           <textarea
             id="information"
@@ -141,8 +174,9 @@ function knowledgeForm(knowledge, handelInput, handelSubmit) {
             onChange={handelInput}
           />
         </div>
+        <p id="mensagemValidacao">* Os campos são de preenchimento obrigatório</p>
         <br />
-        <button className="button" type="submit">Salvar</button>
+        <button id="btnSalvar" className="button" type="submit">Salvar</button>
         <BackButton />
         <DeleteButton data={knowledge} />
       </form>

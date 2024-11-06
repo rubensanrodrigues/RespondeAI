@@ -50,10 +50,52 @@ function UserNew() {
 
   function handelSubmit(e) {
     e.preventDefault();
-    saveUser(letsGo, user)
+
+    // Se estiver ok, salva
+    if (isValid(user)) {
+      saveUser(letsGo, user);
+    }
+    else {
+      const element = document.getElementById('mensagemValidacao');
+      element.classList.add('error-msg');
+    }
   }  
   
   return userForm(user, handelInput, handelSubmit)
+}
+
+function isValid(user) {
+  var isOK = true;
+    
+  // Valida se esta vazio
+  if (!user.username) {
+    isOK = false;
+  }
+  // Valida quantidade de caracters
+  else if(user.username.length < 5) {
+    isOK = false;
+  }
+
+  // Valida se esta vazio
+  if (!user.useremail) {
+    isOK = false;
+  }
+  // Email valido precisa ter um @
+  else if (!user.useremail.includes('@')) {
+    isOK = false;
+  }
+
+  // Valida se esta vazio
+  if (!user.password) {
+    isOK = false;
+  }
+  // Valida quantidade de caracters
+  else if(user.password.length < 5 || user.password.length > 18) {
+    alert('password len')
+    isOK = false;
+  }
+
+  return isOK;
 }
 
 function UserEdit() {
@@ -79,8 +121,15 @@ function UserEdit() {
 
   function handelSubmit(e) {
     e.preventDefault();
-    console.log(user)
-    updateUser(letsGo, user)
+    
+    // Se estiver ok, salva
+    if (isValid(user)) {
+      updateUser(letsGo, user);
+    }
+    else {
+      const element = document.getElementById('mensagemValidacao');
+      element.classList.add('error-msg');
+    }
   }
 
   return userForm(user, handelInput, handelSubmit)
@@ -100,7 +149,7 @@ function DeleteButton({data}) {
   }
   
   if (data.id)
-    return (<button className="button" onClick={handleClick}>Excluir permanentemente</button>)
+    return (<button id="btnDelete" className="button" onClick={handleClick}>Excluir permanentemente</button>)
 }
 
 function BackButton() {
@@ -111,17 +160,18 @@ function BackButton() {
     navigate('/appuser/users/');
   }
 
-  return (<button className="button" onClick={letsBack}>Voltar à listagem</button>)
+  return (<button id="btnVoltar" className="button" onClick={letsBack}>Voltar à listagem</button>)
 }
 
 function userForm(user, handelInput, handelSubmit) {
   return (
     <section>
+      <h3>Formulário para Cadastro de Usuário</h3>
       <form onSubmit={handelSubmit} className="form-entity">
         <div className="form-user-container">
           <div>
-            <label>
-              Username
+            <label htmlFor="username">
+              * Username (8 ou mais caracteres)
             </label>
             <input
               type="text"
@@ -133,8 +183,8 @@ function userForm(user, handelInput, handelSubmit) {
           </div>
           <br />
           <div>
-            <label>
-              Email
+            <label htmlFor="useremail">
+              * Email (email válido, não pode ser vazio)
             </label>
             <input
               type="text"
@@ -146,8 +196,8 @@ function userForm(user, handelInput, handelSubmit) {
           </div>
           <br />
           <div>
-            <label>
-              Senha
+            <label htmlFor="password">
+              * Senha (8 ou mais caracteres)
             </label>
             <input
               type="text"
@@ -157,8 +207,9 @@ function userForm(user, handelInput, handelSubmit) {
               onChange={handelInput}
             />
           </div>
+          <p id="mensagemValidacao">* Os campos devem ser prenchidos conforme orientação</p>
           <br />
-          <button className="button" type="submit">Salvar</button>
+          <button id="btnSalvar" className="button" type="submit">Salvar</button>
           <BackButton />
           <DeleteButton data={user} />
         </div>

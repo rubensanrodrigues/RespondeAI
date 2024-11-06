@@ -138,3 +138,7 @@ html {
   font-weight: bold;
   font-size: 10pt;
 }
+
+#mensagemValidacao {
+  font-size: 10pt;
+}
