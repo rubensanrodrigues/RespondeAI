@@ -46,7 +46,7 @@ class UserController():
         response_wrapper = ResponseWrapper()
         data = request.get_json()
 
-        user = KUser(username=data['username'], useremail=data['username'], password=data['password'])
+        user = KUser(username=data['username'], useremail=data['useremail'], password=data['password'])
         db.session.add(user)
         db.session.commit()
 
