@@ -1,6 +1,7 @@
 # misc
 .DS_Store
 .venv/
+.vscode
 dados/
 docs/
 __pycache__/
