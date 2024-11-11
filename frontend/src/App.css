@@ -16,12 +16,29 @@ html {
 }
 
 .inputSearch {
-  width: 500px;
+  width: 480px;
   padding: 12px;
   border: 2px solid #bbb;
   border-radius: 5px;
   box-shadow: 3px 3px 3px #ccc;
   font-size: 12pt;
+}
+
+.input-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.input-wrapper button {
+  position: absolute;
+  top: 5px;
+  right: 3px;
+  font-size: 12px;
+  color: black;
+  font-weight: bold;
+  display: inline-block;
+  margin: 5px;
+  padding: 5px 10px;  
 }
 
 .user-area-menu {
@@ -141,4 +158,20 @@ html {
 
 #mensagemValidacao {
   font-size: 10pt;
+}
+
+@media only screen and (max-width: 600px) {
+  .App {
+    max-width: 100%;
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+
+  .inputSearch {
+    width: 94%;
+  }
+
+  .input-wrapper {
+    width: 98%;
+  }
 }

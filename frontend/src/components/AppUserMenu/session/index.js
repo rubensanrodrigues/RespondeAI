@@ -32,7 +32,7 @@ function UserLogin() {
       <form onSubmit={handelSubmit} className="form-entity">
         <div className="form-user-container">
           <div>
-            <label>
+            <label htmlFor="username">
               Username
             </label>
             <input
@@ -45,7 +45,7 @@ function UserLogin() {
           </div>
           <br />
           <div>
-            <label>
+            <label htmlFor="password">
               Senha
             </label>
             <input

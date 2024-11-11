@@ -90,8 +90,7 @@ function isValid(user) {
     isOK = false;
   }
   // Valida quantidade de caracters
-  else if(user.password.length < 5 || user.password.length > 18) {
-    alert('password len')
+  else if(user.password.length < 5 || user.password.length > 20) {
     isOK = false;
   }
 
@@ -171,7 +170,7 @@ function userForm(user, handelInput, handelSubmit) {
         <div className="form-user-container">
           <div>
             <label htmlFor="username">
-              * Username (8 ou mais caracteres)
+              * Username (5 ou mais caracteres)
             </label>
             <input
               type="text"
@@ -197,7 +196,7 @@ function userForm(user, handelInput, handelSubmit) {
           <br />
           <div>
             <label htmlFor="password">
-              * Senha (8 ou mais caracteres)
+              * Senha (deve conter de 5 até 20 caracteres)
             </label>
             <input
               type="text"
@@ -207,7 +206,7 @@ function userForm(user, handelInput, handelSubmit) {
               onChange={handelInput}
             />
           </div>
-          <p id="mensagemValidacao">* Os campos devem ser prenchidos conforme orientação</p>
+          <p id="mensagemValidacao">* Os campos devem ser preenchidos conforme orientação</p>
           <br />
           <button id="btnSalvar" className="button" type="submit">Salvar</button>
           <BackButton />
