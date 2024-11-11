@@ -10,3 +10,6 @@ __pycache__/
 crawler.py
 file_to_db.py
 files_to_db.py
+
+# testes automatizados
+test_basic.py
