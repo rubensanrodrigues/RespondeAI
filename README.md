@@ -1,5 +1,5 @@
 # RespondeAI
-## _Aplicação Web vinculada a Inteligência Artificial com a finalidade de ajudar profissionais de saúde executar consultas de forma rápida de informações relevantes e verídicas de doenças emergentes com foco na Mpox_
+## _Aplicação Web vinculada a Inteligência Artificial com a finalidade de ajudar profissionais de saúde a executar consultas de forma rápida de informações relevantes e verídicas de doenças emergentes com foco na Mpox_
 
 Projeto em desenvolvimento por alunos da Universidade Virtual do Estado de São Paulo - UNIVESP matriculados na disciplina PJI240 - Projeto Integrador em Computação II.
 
@@ -29,9 +29,51 @@ Antes de executar o projeto, você precisa ter o **Docker** instalado e configur
 
 ### Execução
 
-Para rodar a aplicação utilizando o Docker, siga as instruções abaixo:
+1. **Criar um banco de dados**
 
-1. **Baixe a imagem do Docker:**
+Para a aplicação funcionar corretamente, é necessário criar uma base de dados com a estrutura definida abaixo. Execute os seguintes comandos no seu PostgreSQL: 
+
+```sql
+CREATE TABLE public.kuser (
+	id serial4 NOT NULL,
+	username varchar NOT NULL,
+	useremail varchar NOT NULL,
+	"password" varchar NULL,
+	CONSTRAINT kuser_pkey PRIMARY KEY (id),
+	CONSTRAINT kuser_useremail_key UNIQUE (useremail),
+	CONSTRAINT kuser_username_key UNIQUE (username)
+);
+
+CREATE TABLE public.knowledge (
+	id serial4 NOT NULL,
+	subject varchar NOT NULL,
+	information text NOT NULL,
+	token_count int4 NOT NULL,
+	kuser_id int4 NOT NULL,
+	CONSTRAINT knowledge_pkey PRIMARY KEY (id)
+);
+
+ALTER TABLE public.knowledge ADD CONSTRAINT knowledge_kuser_id_fkey FOREIGN KEY (kuser_id) REFERENCES public.kuser(id);
+
+
+CREATE TABLE public.knowledge_formated (
+	id serial4 NOT NULL,
+	token_count int4 NOT NULL,
+	resized text NOT NULL,
+	embeddings text NULL,
+	is_created bool NULL,
+	knowledge_id int4 NOT NULL,
+	CONSTRAINT knowledge_formated_pkey PRIMARY KEY (id)
+);
+
+ALTER TABLE public.knowledge_formated ADD CONSTRAINT knowledge_formated_knowledge_id_fkey FOREIGN KEY (knowledge_id) REFERENCES public.knowledge(id);
+```
+
+2. **Rodando a aplicação com Docker**
+
+Para rodar a aplicação utilizando o Docker, siga os passos abaixo:
+
+**Passo 1. Baixar a imagem do Docker:**
 
    Se você ainda não tiver a imagem localmente, use o seguinte comando para baixá-la:
 
@@ -40,7 +82,7 @@ Para rodar a aplicação utilizando o Docker, siga as instruções abaixo:
    ```
 
 
-2. **Execute o contêiner:**
+**Passo 2. Executar o contêiner:**
 
 Para iniciar a aplicação, execute o seguinte comando:
 
@@ -60,11 +102,10 @@ Para iniciar a aplicação, execute o seguinte comando:
 - `SQLALCHEMY_DATABASE_URI=postgresql://dbuser:dbpass@localhost:5432/meudb`: A URL de conexão com o banco de dados PostgreSQL (ajuste conforme o seu ambiente de banco de dados).
 - `OPENAI_KEY="open-api-key"`: A chave de API para a integração com o OpenAI (substitua pela sua chave real).
 
-Esse comando irá:
+**Esse comando irá:**
 - Rodar a aplicação em segundo plano (`-d`).
 - Mapear a porta **80** do contêiner para a porta **80** do seu host.
 - Iniciar a aplicação com as variáveis de ambiente necessárias para o funcionamento correto.
-
 
 3. **Acessando a aplicação:**
 
