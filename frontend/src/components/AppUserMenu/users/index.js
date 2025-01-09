@@ -199,7 +199,7 @@ function userForm(user, handelInput, handelSubmit) {
               * Senha (deve conter de 5 até 20 caracteres)
             </label>
             <input
-              type="text"
+              type="password"
               id="password"
               name="password"
               value={user.password}
